@@ -31,7 +31,12 @@ apt-get -y update && apt-get -y upgrade
 
 #INSTALL LOGISTICAL DEPENDENCIES
 echo -e "\e[1;32mINSTALL LOGISTICAL DEPENDENCIES\e[0m"
-apt-get install -y git python-setuptools python-dev swig libccid pcscd pcsc-tools python-pyscard libpcsclite1 unzip tee firefox-esr xserver-xorg lightdm xfce4 cmake automake
+apt-get install -y git python-setuptools python-dev swig libccid pcscd pcsc-tools python-pyscard libpcsclite1 unzip firefox-esr xserver-xorg lightdm xfce4 cmake automake
+#Setup PySIM
+cd /usr/src
+git clone git://git.osmocom.org/pysim pysim
+cd /usr/local/bin
+ln -s /usr/src/pysim/pySim-prog.py pySim-prog.py
 pySIM_Path=`which pySim-prog.py`
 echo -e "\e[1;32mPySIM Installed To: $pySIM_Path\e[0m"
 #add $pysim_path = "/usr/local/bin"; to /var/www/html/nib/config.php
@@ -49,7 +54,7 @@ cd bladeRF-master
 cd host
 mkdir build
 cd build
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DINSTALL_UDEV_RULES=ON ../
+echo `cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DINSTALL_UDEV_RULES=ON ../`
 make -j4
 make install > /var/log/BladeRF_install.log
 ldconfig
