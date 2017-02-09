@@ -39,7 +39,17 @@ cd /usr/local/bin
 ln -s /usr/src/pysim/pySim-prog.py pySim-prog.py
 pySIM_Path=`which pySim-prog.py`
 echo -e "\e[1;32mPySIM Installed To: $pySIM_Path\e[0m"
-#add $pysim_path = "/usr/local/bin"; to /var/www/html/nib/config.php
+
+#Update PySim Path for Web GUI
+pypath="/var/www/html/nib/config.php"
+tee $pypath > /dev/null <<EOF
+<?php
+$pysim_path = "/usr/local/bin";
+?>
+EOF
+echo "##### BEGIN PySim #####"
+echo `cat $pypath`
+echo "##### END PySim #####"
 
 #INSTALL Apache, PHP, GCC, and USB dependencies
 echo -e "\e[1;32mINSTALL Apache, PHP, and USB dependencies\e[0m"
@@ -86,9 +96,10 @@ cd /var/www/html
 ln -s /usr/local/share/yate/nib_web nib
 #Permission changes
 chmod -R a+w /usr/local/etc/yate
+
 #Update YateBTS Config
 yatebts_config="/usr/local/etc/yate/ybts.conf"
-tee  $yatebts_config > /dev/null <<EOF
+tee -a $yatebts_config > /dev/null <<EOF
 Radio.Band=900
 Radio.C0=75
 Identity.MCC=001
@@ -97,12 +108,19 @@ Identity.ShortName=$networkname
 Radio.PowerManager.MaxAttenDB=35
 Radio.PowerManager.MinAttenDB=35
 EOF
+echo "##### BEGIN YBTS.CONF #####"
+echo `cat $yatebts_config`
+echo "##### END YBTS.CONF #####"
+
 #Update Yate Subscribers
 yate_subscribers="/usr/local/etc/yate/subscribers.conf"
-tee  $yate_subscribers > /dev/null <<EOF
+tee -a $yate_subscribers > /dev/null <<EOF
 country_code=1
 regexp=.*
 EOF
+echo "##### BEGIN SUBSCRIBERS.CONF #####"
+echo `cat $yate_subscribers`
+echo "##### END SUBSCRIBERS.CONF #####"
 
 #WE HAVE COMPLETED ALL NECESSARY STEPS
 echo -e "\e[1;32mNIB Ready!\e[0m"
