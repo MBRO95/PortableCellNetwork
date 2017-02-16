@@ -68,7 +68,7 @@ echo `cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DINSTA
 make -j4
 make install > /var/log/BladeRF_install.log
 ldconfig
-read -n1 -r -p "Press connect the BladeRF...then press any key to continue..."
+read -n1 -r -p "Please connect the BladeRF...then press any key to continue..."
 echo -e `dmesg`
 read -n1 -r -p "Check that BladeRF is present...then press any key to continue..."
 
@@ -98,33 +98,36 @@ ln -s /usr/local/share/yate/nib_web nib
 chmod -R a+w /usr/local/etc/yate
 
 #Update YateBTS Config
+#GSM Settings
 yatebts_config="/usr/local/etc/yate/ybts.conf"
-tee -a $yatebts_config > /dev/null <<EOF
-Radio.Band=900
-Radio.C0=75
-Identity.MCC=001
-Identity.MNC=01
-Identity.ShortName=$networkname
-Radio.PowerManager.MaxAttenDB=35
-Radio.PowerManager.MinAttenDB=35
-EOF
-echo "##### BEGIN YBTS.CONF #####"
+sed -i '/Radio.Band=/ c\Radio.Band=900' $yatebts_config
+sed -i '/Radio.C0=/ c\Radio.C0=75' $yatebts_config
+sed -i '/;Identity.MCC=/ c\Identity.MCC=001' $yatebts_config
+sed -i '/;Identity.MNC=/ c\Identity.MNC=01\nIdentity.ShortName=$networkname' $yatebts_config
+sed -i '/;Radio.PowerManager.MinAttenDB=/ c\Radio.PowerManager.MaxAttenDB=35' $yatebts_config
+sed -i '/;Radio.PowerManager.MaxAttenDB=/ c\Radio.PowerManager.MaxAttenDB=35' $yatebts_config
+#Tapping Settings
+sed -i '/;GSM=no/ c\GSM=yes' $yatebts_config
+sed -i '/;GPRS=no/ c\GPRS=yes' $yatebts_config
+sed -i '/;TargetIP=127.0.0.1/ c\TargetIP=127.0.0.1' $yatebts_config
+echo "##### BEGIN VERIFY YBTS.CONF #####"
 echo `cat $yatebts_config`
-echo "##### END YBTS.CONF #####"
-
+echo "##### VERIFIED YBTS.CONF #####"
+#Update Welcome Message
+cd /usr/local/share/yate/scripts
+sed -i '/var msg_text/ c\var msg_text = "Welcome to the PCN. Your number is: "+msisdn+".";' nib.js
 #Update Yate Subscribers
 yate_subscribers="/usr/local/etc/yate/subscribers.conf"
-tee -a $yate_subscribers > /dev/null <<EOF
-country_code=1
-regexp=.*
-EOF
-echo "##### BEGIN SUBSCRIBERS.CONF #####"
+sed -i '/;country_code=/ c\country_code=1' $yate_subscribers
+sed -i '/;regexp=/ c\regexp=.*' $yate_subscribers
+echo "##### BEGIN VERIFY SUBSCRIBERS.CONF #####"
 echo `cat $yate_subscribers`
-echo "##### END SUBSCRIBERS.CONF #####"
+echo "##### VERIFIED SUBSCRIBERS.CONF #####"
 
 #WE HAVE COMPLETED ALL NECESSARY STEPS
 echo -e "\e[1;32mNIB Ready!\e[0m"
 echo -e "\e[1mYateBTS Config Site:\e[0m \e[4;32mhttp://127.0.0.1/nib\e[0m"
-echo -e "\e[1mConfigure GSM Tapping; Then Issue 'yate -s'\e[0m"
+read -n1 -r -p "Please make sure the BladeRF is still connected...then press any key to continue..."
+echo -e "\e[1mIssue 'sudo yate -s' when this script completes!\e[0m"
 #Open Web Interface
 firefox http://127.0.0.1/nib
