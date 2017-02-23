@@ -1,21 +1,16 @@
-# The Modernist theme
-
-[![Build Status](https://travis-ci.org/pages-themes/modernist.svg?branch=master)](https://travis-ci.org/pages-themes/modernist) [![Gem Version](https://badge.fury.io/rb/jekyll-theme-modernist.svg)](https://badge.fury.io/rb/jekyll-theme-modernist)
-
-*Modernist is a Jekyll theme for GitHub Pages. You can [preview the theme to see what it looks like](http://pages-themes.github.io/modernist), or even [use it today](#usage).*
-
-![Thumbnail of modernist](thumbnail.png)
+# Portable Cell Network
 
 ## Usage
 
-To use the Modernist theme:
+To deploy your own portable cell network you'll need:
 
-1. Add the following to your site's `_config.yml`:
-
-    ```yml
-    theme: jekyll-theme-modernist
+1. Raspberry Pi (We used a 3rd Generation Pi)
+2. MicroSD Card (32GB Reccommended)
+3. Nuand BladeRF (We used the BladeRF x40, the smaller card offered by Nuand)
+4. SSH enabled on the Pi (For ease of use, Terminal works fine too)
+    ```bash
+    sudo raspi_config
     ```
-
 2. Optionally, if you'd like to preview your site on your computer, add the following to your site's `Gemfile`:
 
     ```ruby
