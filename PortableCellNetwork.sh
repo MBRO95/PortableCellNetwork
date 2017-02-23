@@ -26,7 +26,7 @@ else
 fi
 
 #UPDATE & UPGRADE THE SYSTEM
-echo -e "\e[1;32mStart Time: \e[0m"`date -u`
+echo -e "\e[1;32mStart Time: \e[0m `date -u`"
 echo -e "\e[1;32mUPDATE & UPGRADE THE SYSTEM\e[0m"
 apt-get -y update && apt-get -y upgrade
 
@@ -143,4 +143,4 @@ read -n1 -r -p "Please make sure the BladeRF is still connected...then press any
 echo -e "\e[1mIssue 'sudo yate -s' when this script completes!\e[0m"
 #Open Web Interface
 firefox http://127.0.0.1/nib
-echo -e "\e[1;32mEnd Time: \e[0m"`date -u`
+echo -e "\e[1;32mEnd Time: \e[0m `date -u`"
