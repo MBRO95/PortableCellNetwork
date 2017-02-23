@@ -1,1 +1,5 @@
+title: Portable Cell Network
+description: This project is deployable on Raspberry Pi using BladeRF and allows for the creation and operation of a custom local GSM cell tower.
+show_downloads: true
+google_analytics:
 theme: jekyll-theme-modernist
