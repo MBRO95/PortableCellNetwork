@@ -4,7 +4,7 @@
 
 To deploy your own portable cell network you'll need:
 
-1. Raspberry Pi (We used a 3rd Generation Pi)
+1. [Raspberry Pi (We used a 3rd Generation Model B Pi)](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/)
 2. MicroSD Card (32GB Reccommended)
 3. [Nuand BladeRF (We used the BladeRF x40, the smaller card offered by Nuand)](https://www.nuand.com/blog/product/bladerf-x40/)
 4. SSH enabled on the Pi (For ease of use, Terminal works fine too)
@@ -23,78 +23,23 @@ To deploy your own portable cell network you'll need:
     sudo systemctl enable ssh.socket
     sudo reboot
     ```
-5. 
-2. Optionally, if you'd like to preview your site on your computer, add the following to your site's `Gemfile`:
+5. Fetch and configure the install script from this repository
 
-    ```ruby
-    gem "github-pages", group: :jekyll_plugins
+    ```bash
+    wget https://raw.githubusercontent.com/MBRO95/PortableCellNetwork/master/PortableCellNetwork.sh #Download script
+    chmod +x ./PortableCellNetwork.sh #Add execute functionality
     ```
+6. Run script
 
-
-
-## Customizing
-
-### Configuration variables
-
-Modernist will respect the following variables, if set in your site's `_config.yml`:
-
-```yml
-title: [The title of your site]
-description: [A short description of your site's purpose]
-```
-
-Additionally, you may choose to set the following optional variables:
-
-```yml
-show_downloads: ["true" or "false" to indicate whether to provide a download URL]
-google_analytics: [Your Google Analytics tracking ID]
-```
-
-### Stylesheet
-
-If you'd like to add your own custom styles:
-
-1. Create a file called `/assets/css/style.scss` in your site
-2. Add the following content to the top of the file, exactly as shown:
-    ```scss
-    ---
-    ---
-
-    @import "{{ site.theme }}";
+    ```bash
+    sudo ./PortableCellNetwork.sh
     ```
-3. Add any custom CSS (or Sass, including imports) you'd like immediately after the `@import` line
+7. The script will walk you through customizing the cell network name and then kick off
+8. After the packages are installed and configured for the BladeRF, the script will pause and ask you to connect the BladeRF to the Raspberry Pi
+9. Once connected, press any key to continue and the script will detect if the BladeRF is present and continue until installation is complete
 
-### Layouts
+### Current Installation Time: 
 
-If you'd like to change the theme's HTML layout:
+## Pre-built Image
 
-1. [Copy the original template](https://github.com/pages-themes/modernist/blob/master/_layouts/default.html) from the theme's repository<br />(*Pro-tip: click "raw" to make copying easier*)
-2. Create a file called `/_layouts/default.html` in your site
-3. Paste the default layout content copied in the first step
-4. Customize the layout as you'd like
-
-## Roadmap
-
-See the [open issues](https://github.com/pages-themes/modernist/issues) for a list of proposed features (and known issues).
-
-## Project philosophy
-
-The Modernist theme is intended to make it quick and easy for GitHub Pages users to create their first (or 100th) website. The theme should meet the vast majority of users' needs out of the box, erring on the side of simplicity rather than flexibility, and provide users the opportunity to opt-in to additional complexity if they have specific needs or wish to further customize their experience (such as adding custom CSS or modifying the default layout). It should also look great, but that goes without saying.
-
-## Contributing
-
-Interested in contributing to Modernist? We'd love your help. Modernist is an open source project, built one contribution at a time by users like you. See [the CONTRIBUTING file](CONTRIBUTING.md) for instructions on how to contribute.
-
-### Previewing the theme locally
-
-If you'd like to preview the theme locally (for example, in the process of proposing a change):
-
-1. Clone down the theme's repository (`git clone https://github.com/pages-themes/modernist`)
-2. `cd` into the theme's directory
-3. Run `script/bootstrap` to install the necessary dependencies
-4. Run `bundle exec jekyll serve` to start the preview server
-5. Visit [`localhost:4000`](http://localhost:4000) in your browser to preview the theme
-
-### Running tests
-
-The theme contains a minimal test suite, to ensure a site with the theme would build successfully. To run the tests, simply run `script/cibuild`. You'll need to run `script/bootstrap` one before the test script will work.
+Additionally, you can skip compiling above by downloading this SD card image file (in this repository) and flashing to your SD card.
