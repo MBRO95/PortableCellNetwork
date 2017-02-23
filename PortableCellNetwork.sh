@@ -69,8 +69,18 @@ make -j4
 make install > /var/log/BladeRF_install.log
 ldconfig
 read -n1 -r -p "Please connect the BladeRF...then press any key to continue..."
-echo -e `dmesg`
-read -n1 -r -p "Check that BladeRF is present...then press any key to continue..."
+if dmesg | grep -q bladeRF; then
+    echo -e "\e[1;32mBladeRF Successfully Detected!\e[0m"
+else
+    echo -e "\e[1;32mBladeRF Was Not Detected!\e[0m"
+    read -n1 -r -p "Please connect the BladeRF...then press any key to continue..."
+    if dmesg | grep -q bladeRF; then
+        echo -e "\e[1;32mBladeRF Successfully Detected!\e[0m"
+    else
+        echo -e "\e[1;32mBladeRF Was Not Detected! Exiting Script...\e[0m"
+        exit
+    fi
+fi
 
 #INSTALL Yate & YateBTS
 echo -e "\e[1;32mINSTALL Yate & YateBTS\e[0m"
@@ -102,14 +112,15 @@ chmod -R a+w /usr/local/etc/yate
 yatebts_config="/usr/local/etc/yate/ybts.conf"
 sed -i '/Radio.Band=/ c\Radio.Band=900' $yatebts_config
 sed -i '/Radio.C0=/ c\Radio.C0=75' $yatebts_config
-sed -i '/;Identity.MCC=/ c\Identity.MCC=001' $yatebts_config
-sed -i '/;Identity.MNC=/ c\Identity.MNC=01\nIdentity.ShortName=$networkname' $yatebts_config
-sed -i '/;Radio.PowerManager.MinAttenDB=/ c\Radio.PowerManager.MaxAttenDB=35' $yatebts_config
-sed -i '/;Radio.PowerManager.MaxAttenDB=/ c\Radio.PowerManager.MaxAttenDB=35' $yatebts_config
+sed -i '/Identity.MCC=/ c\Identity.MCC=001' $yatebts_config
+sed -i '/Identity.MNC=/ c\Identity.MNC=01' $yatebts_config
+sed -i '/Identity.ShortName=/ c\Identity.ShortName='$networkname'' $yatebts_config
+sed -i '/Radio.PowerManager.MinAttenDB=/ c\Radio.PowerManager.MaxAttenDB=35' $yatebts_config
+sed -i '/Radio.PowerManager.MaxAttenDB=/ c\Radio.PowerManager.MaxAttenDB=35' $yatebts_config
 #Tapping Settings
-sed -i '/;GSM=no/ c\GSM=yes' $yatebts_config
-sed -i '/;GPRS=no/ c\GPRS=yes' $yatebts_config
-sed -i '/;TargetIP=127.0.0.1/ c\TargetIP=127.0.0.1' $yatebts_config
+sed -i '/GSM=no/ c\GSM=yes' $yatebts_config
+sed -i '/GPRS=no/ c\GPRS=yes' $yatebts_config
+sed -i '/TargetIP=127.0.0.1/ c\TargetIP=127.0.0.1' $yatebts_config
 echo "##### BEGIN VERIFY YBTS.CONF #####"
 echo `cat $yatebts_config`
 echo "##### VERIFIED YBTS.CONF #####"
@@ -118,8 +129,8 @@ cd /usr/local/share/yate/scripts
 sed -i '/var msg_text/ c\var msg_text = "Welcome to the PCN. Your number is: "+msisdn+".";' nib.js
 #Update Yate Subscribers
 yate_subscribers="/usr/local/etc/yate/subscribers.conf"
-sed -i '/;country_code=/ c\country_code=1' $yate_subscribers
-sed -i '/;regexp=/ c\regexp=.*' $yate_subscribers
+sed -i '/country_code=/ c\country_code=1' $yate_subscribers
+sed -i '/regexp=/ c\regexp=.*' $yate_subscribers
 echo "##### BEGIN VERIFY SUBSCRIBERS.CONF #####"
 echo `cat $yate_subscribers`
 echo "##### VERIFIED SUBSCRIBERS.CONF #####"
