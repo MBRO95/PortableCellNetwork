@@ -6,11 +6,24 @@ To deploy your own portable cell network you'll need:
 
 1. Raspberry Pi (We used a 3rd Generation Pi)
 2. MicroSD Card (32GB Reccommended)
-3. Nuand BladeRF (We used the BladeRF x40, the smaller card offered by Nuand)
+3. [Nuand BladeRF (We used the BladeRF x40, the smaller card offered by Nuand)](https://www.nuand.com/blog/product/bladerf-x40/)
 4. SSH enabled on the Pi (For ease of use, Terminal works fine too)
+    
+    Raspberry Pi Util
     ```bash
     sudo raspi_config
+    > 7 Advanced Options
+    >> A4 SSH
+    >>> Yes
     ```
+
+    Edit Directly
+    ```bash
+    mv /etc/rc2.d/ssh/K[XX]ssh /etc/rc2.d/ssh/S02ssh #XX may vary on your system, for me it was 01
+    sudo systemctl enable ssh.socket
+    sudo reboot
+    ```
+5. 
 2. Optionally, if you'd like to preview your site on your computer, add the following to your site's `Gemfile`:
 
     ```ruby
