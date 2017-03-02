@@ -115,7 +115,7 @@ sed -i '/Radio.Band=/ c\Radio.Band=900' $yatebts_config
 sed -i '/Radio.C0=/ c\Radio.C0=75' $yatebts_config
 sed -i '/;Identity.MCC=/ c\Identity.MCC=001' $yatebts_config
 sed -i '/;Identity.MNC=/ c\Identity.MNC=01' $yatebts_config
-sed -i '/Radio.PowerManager.MinAttenDB=/ c\Radio.PowerManager.MaxAttenDB=35/nIdentity.ShortName='$networkname'' $yatebts_config
+sed -i '/Radio.PowerManager.MinAttenDB=/ c\Radio.PowerManager.MinAttenDB=35\nIdentity.ShortName='$networkname'' $yatebts_config
 sed -i '/Radio.PowerManager.MaxAttenDB=/ c\Radio.PowerManager.MaxAttenDB=35' $yatebts_config
 #Tapping Settings
 sed -i '/GSM=no/ c\GSM=yes' $yatebts_config
