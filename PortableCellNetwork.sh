@@ -126,7 +126,7 @@ echo `cat $yatebts_config`
 echo "##### VERIFIED YBTS.CONF #####"
 #Update Welcome Message
 cd /usr/local/share/yate/scripts
-sed -i '/var msg_text/ c\var msg_text = "Welcome to '$networkname'. Your number is: "+msisdn+".";' nib.js
+sed -i '/var msg_text/ c\var msg_text = "Welcome to "$networkname". Your number is: "+msisdn+".";' nib.js
 #Update Yate Subscribers
 yate_subscribers="/usr/local/etc/yate/subscribers.conf"
 sed -i '/country_code=/ c\country_code=1' $yate_subscribers
