@@ -127,7 +127,7 @@ echo `cat $yatebts_config`
 echo "##### VERIFIED YBTS.CONF #####"
 #Update Welcome Message
 cd /usr/local/share/yate/scripts
-sed -i '/var msg_text/ c\var msg_text = "Welcome to the PCN. Your number is: "+msisdn+".";' nib.js
+sed -i '/var msg_text/ c\var msg_text = "Welcome to '$networkname'. Your number is: "+msisdn+".";' nib.js
 #Update Yate Subscribers
 yate_subscribers="/usr/local/etc/yate/subscribers.conf"
 sed -i '/country_code=/ c\country_code=1' $yate_subscribers
@@ -138,9 +138,6 @@ echo "##### VERIFIED SUBSCRIBERS.CONF #####"
 
 #WE HAVE COMPLETED ALL NECESSARY STEPS
 echo -e "\e[1;32mNIB Ready!\e[0m"
-echo -e "\e[1mYateBTS Config Site:\e[0m \e[4;32mhttp://127.0.0.1/nib\e[0m"
-read -n1 -r -p "Please make sure the BladeRF is still connected...then press any key to continue..."
-echo -e "\e[1mIssue 'sudo yate -s' when this script completes!\e[0m"
-#Open Web Interface
-firefox http://127.0.0.1/nib
 echo -e "\e[1;32mEnd Time: \e[0m `date -u`"
+echo -e "\e[1mYateBTS Config Site:\e[0m \e[4;32mhttp://127.0.0.1/nib\e[0m"
+echo -e "\e[1mIssue 'sudo yate -s' to start-up the network!\e[0m"
