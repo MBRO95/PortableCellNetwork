@@ -32,7 +32,7 @@ apt-get -y update && apt-get -y upgrade
 
 #INSTALL LOGISTICAL DEPENDENCIES
 echo -e "\e[1;32mINSTALL LOGISTICAL DEPENDENCIES\e[0m"
-apt-get install -y git python-setuptools python-dev swig libccid pcscd pcsc-tools python-pyscard libpcsclite1 unzip firefox-esr xserver-xorg lightdm xfce4 cmake automake
+apt-get install -y git python-setuptools python-dev swig libccid pcscd pcsc-tools python-pyscard libpcsclite1 unzip firefox-esr xserver-xorg lightdm xfce4 cmake automake matchbox-keyboard
 #Setup PySIM
 cd /usr/src
 git clone git://git.osmocom.org/pysim pysim
