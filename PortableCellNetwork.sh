@@ -32,10 +32,17 @@ apt-get -y update && apt-get -y upgrade
 
 #INSTALL LOGISTICAL DEPENDENCIES
 echo -e "\e[1;32mINSTALL LOGISTICAL DEPENDENCIES\e[0m"
-apt-get install -y git python-setuptools python-dev swig libccid pcscd pcsc-tools python-pyscard libpcsclite1 unzip firefox-esr xserver-xorg lightdm xfce4 cmake automake matchbox-keyboard
-#Setup PySIM
+apt-get install -y git python-setuptools python-dev swig libccid pcscd pcsc-tools python-pyscard libpcsclite1 unzip firefox-esr xserver-xorg lightdm xfce4 cmake automake matchbox-keyboard unzip
+#Setup PySIM - If PySIM current version worked we would use this method commented. Falling back to old commit for intended operation
 cd /usr/src
-git clone git://git.osmocom.org/pysim pysim
+#   git clone git://git.osmocom.org/pysim pysim
+wget https://github.com/osmocom/pysim/archive/2fc205ceb93a8c58d6ad88d3bfd6aa84c628514a.zip
+unzip pysim-2fc205ceb93a8c58d6ad88d3bfd6aa84c628514a.zip
+cd pysim-2fc205ceb93a8c58d6ad88d3bfd6aa84c628514a
+rm README
+rm COPYING
+mkdir ../pysim
+mv -R * ../pysim
 cd /usr/local/bin
 ln -s /usr/src/pysim/pySim-prog.py pySim-prog.py
 pySIM_Path=`which pySim-prog.py`
