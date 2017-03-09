@@ -76,7 +76,6 @@ echo `cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DINSTA
 make -j4
 make install > /var/log/BladeRF_install.log
 ldconfig
-read -n1 -r -p "Please connect the BladeRF...then press any key to continue..."
 if dmesg | grep -q bladeRF; then
     echo -e "\e[1;32mBladeRF Successfully Detected!\e[0m"
 else
