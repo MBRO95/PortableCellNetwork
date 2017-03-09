@@ -37,27 +37,19 @@ apt-get install -y git python-setuptools python-dev swig libccid pcscd pcsc-tool
 cd /usr/src
 #   git clone git://git.osmocom.org/pysim pysim
 wget https://github.com/osmocom/pysim/archive/2fc205ceb93a8c58d6ad88d3bfd6aa84c628514a.zip
-unzip pysim-2fc205ceb93a8c58d6ad88d3bfd6aa84c628514a.zip
+unzip 2fc205ceb93a8c58d6ad88d3bfd6aa84c628514a.zip
 cd pysim-2fc205ceb93a8c58d6ad88d3bfd6aa84c628514a
 rm README
 rm COPYING
 mkdir ../pysim
 mv -R * ../pysim
+cd ../
+rm 2fc205ceb93a8c58d6ad88d3bfd6aa84c628514a.zip
+rm -rf pysim-2fc205ceb93a8c58d6ad88d3bfd6aa84c628514a
 cd /usr/local/bin
 ln -s /usr/src/pysim/pySim-prog.py pySim-prog.py
 pySIM_Path=`which pySim-prog.py`
 echo -e "\e[1;32mPySIM Installed To: $pySIM_Path\e[0m"
-
-#Update PySim Path for Web GUI
-pypath="/var/www/html/nib/config.php"
-tee $pypath > /dev/null <<EOF
-<?php
-$pysim_path = "/usr/local/bin";
-?>
-EOF
-echo "##### BEGIN PySim #####"
-echo `cat $pypath`
-echo "##### END PySim #####"
 
 #INSTALL Apache, PHP, GCC, and USB dependencies
 echo -e "\e[1;32mINSTALL Apache, PHP, and USB dependencies\e[0m"
@@ -113,6 +105,16 @@ cd /var/www/html
 ln -s /usr/local/share/yate/nib_web nib
 #Permission changes
 chmod -R a+w /usr/local/etc/yate
+#Update PySim Path for Web GUI
+pypath="/var/www/html/nib/config.php"
+tee $pypath > /dev/null <<EOF
+<?php
+$pysim_path = "/usr/local/bin";
+?>
+EOF
+echo "##### BEGIN PySim #####"
+echo `cat $pypath`
+echo "##### END PySim #####"
 
 #Update YateBTS Config
 #GSM Settings
