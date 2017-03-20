@@ -42,7 +42,7 @@ cd pysim-2fc205ceb93a8c58d6ad88d3bfd6aa84c628514a
 rm README
 rm COPYING
 mkdir ../pysim
-mv -R * ../pysim
+mv * ../pysim
 cd ../
 rm 2fc205ceb93a8c58d6ad88d3bfd6aa84c628514a.zip
 rm -rf pysim-2fc205ceb93a8c58d6ad88d3bfd6aa84c628514a
@@ -107,11 +107,9 @@ ln -s /usr/local/share/yate/nib_web nib
 chmod -R a+w /usr/local/etc/yate
 #Update PySim Path for Web GUI
 pypath="/var/www/html/nib/config.php"
-tee $pypath > /dev/null <<EOF
-<?php
-$pysim_path = "/usr/local/bin";
-?>
-EOF
+echo "<?php" >> $pypath
+echo '$pysim_path = "/usr/local/bin";' >> $pypath
+echo "?>" >> $pypath
 echo "##### BEGIN PySim #####"
 echo `cat $pypath`
 echo "##### END PySim #####"
