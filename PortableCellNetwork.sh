@@ -142,9 +142,20 @@ sed -i '/;regexp=/ c\regexp=.*' $yate_subscribers
 echo "##### BEGIN VERIFY SUBSCRIBERS.CONF #####"
 echo `cat $yate_subscribers`
 echo "##### VERIFIED SUBSCRIBERS.CONF #####"
-
-#WE HAVE COMPLETED ALL NECESSARY STEPS
+#Enable Call Logging
+touch /var/log/yate-cdr.csv
+chmod -R a+r /var/log/yate-cdr.csv
+cd /usr/local/etc/yate
+tee cdrfile.conf > /dev/null <<EOF
+[general]
+file=/var/log/yate-cdr.csv
+tabs=false
+EOF
+#Enable auto-start on boot
+rclocal="/etc/rc.local"
+sed -i '/exit 0/ c\sudo yate -s &\n firefox-esr 127.0.0.1/nib &\nexit 0' $rclocal
+#SETUP COMPLETED
 echo -e "\e[1;32mNIB Ready!\e[0m"
 echo -e "\e[1;32mEnd Time: \e[0m `date -u`"
 echo -e "\e[1mYateBTS Config Site:\e[0m \e[4;32mhttp://127.0.0.1/nib\e[0m"
-echo -e "\e[1mIssue 'sudo yate -s' to start-up the network!\e[0m"
+echo -e "\e[1mIssue 'sudo yate -s' to start-up the network! Or simply restart the device\e[0m"
