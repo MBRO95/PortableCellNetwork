@@ -136,7 +136,7 @@ sed -i '/var msg_text/ c\var msg_text = "Welcome to '$networkname'. Your number 
 #Update Yate Subscribers
 yate_subscribers="/usr/local/etc/yate/subscribers.conf"
 sed -i '/country_code=/ c\country_code=1' $yate_subscribers
-sed -i '/;regexp=/ c\regexp=.*' $yate_subscribers
+sed -i '/;regexp=/ c\regexp=^00101' $yate_subscribers
 echo "##### BEGIN VERIFY SUBSCRIBERS.CONF #####"
 echo `cat $yate_subscribers`
 echo "##### VERIFIED SUBSCRIBERS.CONF #####"
