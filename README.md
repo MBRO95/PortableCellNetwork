@@ -38,7 +38,7 @@ To deploy your own portable cell network you'll need:
 8. After the packages are installed and configured for the BladeRF, the script will pause and ask you to connect the BladeRF to the Raspberry Pi
 9. Once connected, press any key to continue and the script will detect if the BladeRF is present and continue until installation is complete
 
-#### Current Installation Time: Thu 23 Feb 18:30:53 UTC 2017 > Thu 23 Feb 18:55:08 UTC 2017 = ~25 Minutes
+#### Current Installation Time: Tue 21 Mar 13:15:08 UTC 2017 > Tue 21 Mar 14:16:37 UTC 2017 = ~61 Minutes
 
 ## Pre-built Image
 
