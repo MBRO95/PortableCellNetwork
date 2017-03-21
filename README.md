@@ -35,11 +35,19 @@ To deploy your own portable cell network you'll need:
     sudo ./PortableCellNetwork.sh
     ```
 7. The script will walk you through customizing the cell network name and then kick off
-8. After the packages are installed and configured for the BladeRF, the script will pause and ask you to connect the BladeRF to the Raspberry Pi
-9. Once connected, press any key to continue and the script will detect if the BladeRF is present and continue until installation is complete
+8. After the packages are installed and configured for the BladeRF, the script will detect if the device is present and, if not, it will pause and ask you to connect the BladeRF to the Raspberry Pi. Once connected, press any key to continue and the script will continue until installation is complete.
+9. Reboot the Pi
+    ```bash
+    sudo reboot now
+    ```
+10. Run the 'StartYateBTS.sh' script located on the Desktop
+    ```bash
+    cd ~/Desktop
+    sudo ./StartYateBTS.sh -i #It's important to keep the '-i' flag so the script runs interactively
+    ```
 
 #### Current Installation Time: Tue 21 Mar 13:15:08 UTC 2017 > Tue 21 Mar 14:16:37 UTC 2017 = ~61 Minutes
 
 ## Pre-built Image
 
-Additionally, you can skip compiling above by downloading this SD card image file (in this repository) and flashing to your SD card.
+Additionally, you can skip compiling above by [downloading this SD card image file](https://1drv.ms/u/s!AgREYOhKnDOGnPUc4JhPeDZXMcWJjw) and flashing to your SD card.
