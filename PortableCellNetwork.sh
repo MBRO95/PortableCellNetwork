@@ -1,9 +1,15 @@
 #!/bin/bash
+#Matthew May
+#Portable Cell Network Setup Script v2.0
 
 #Display welcome header
-echo -e "\e[1mHello, Welcome to Portable Cell Network Setup Script v1.9\e[0m"
+echo -e "\e[1mHello, Welcome to Portable Cell Network Setup Script v2.0\e[0m"
 echo -e "\e[1mThis script is inteded to be run on Raspberri Pi\e[0m"
-echo -e "\e[1m**MUST BE RUN WITH ROOT PRIVILEDGES**\e[0m"
+# Check for root
+if [ "$EUID" -ne 0 ]
+  then echo -e "\e[1m**MUST BE RUN WITH ROOT PRIVILEDGES**\n**Please Run Again**\e[0m"
+  exit
+fi
 
 #Query the user for unattended installation variables
 #What should the cell network name be?
@@ -27,6 +33,8 @@ fi
 
 #UPDATE & UPGRADE THE SYSTEM
 echo -e "\e[1;32mStart Time: \e[0m `date -u`"
+starttime=`date -u`
+SECONDS=0
 echo -e "\e[1;32mUPDATE & UPGRADE THE SYSTEM\e[0m"
 apt-get -y update && apt-get -y upgrade
 
@@ -115,6 +123,7 @@ echo `cat $pypath`
 echo "##### END PySim #####"
 
 #Update YateBTS Config
+echo -e "\e[1;32mUpdating YateBTS Config\e[0m"
 #GSM Settings
 yatebts_config="/usr/local/etc/yate/ybts.conf"
 sed -i '/Radio.Band=/ c\Radio.Band=900' $yatebts_config
@@ -149,11 +158,46 @@ tee cdrfile.conf > /dev/null <<EOF
 file=/var/log/yate-cdr.csv
 tabs=false
 EOF
-#Enable auto-start on boot
-#rclocal="/etc/rc.local"
-#sed -i '/exit 0/ c\sudo yate -s &\n firefox-esr 127.0.0.1/nib &\nexit 0' $rclocal
+
+# Raspberry Pi Hardening Script - Brendan Harlow
+echo -e "\e[1;32mRunning Raspberry Pi Hardening Script\e[0m"
+# Update the operating system
+apt-get -y dist-upgrade
+# Report world-writable directories and enable a sticky bit to prevent unauthorized users from modifying files
+echo "Displaying world writable directories"
+df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 2>/dev/null | xargs chmod o-t
+# Remove unnecessary filesystems
+echo "install cramfs /bin/true" >> /etc/modprobe.d/CIS.conf
+echo "install freevxfs /bin/true" >> /etc/modprobe.d/CIS.conf
+echo "install jffs2 /bin/true" >> /etc/modprobe.d/CIS.conf
+echo "install hfs /bin/true" >> /etc/modprobe.d/CIS.conf
+echo "install hfsplus /bin/true" >> /etc/modprobe.d/CIS.conf
+echo "install squashfs /bin/true" >> /etc/modprobe.d/CIS.conf
+echo "install udf /bin/true" >> /etc/modprobe.d/CIS.conf
+# Remove unnecessary network protocols
+echo "install dccp /bin/true" >> /etc/modprobe.d/CIS.conf
+echo "install sctp /bin/true" >> /etc/modprobe.d/CIS.conf
+echo "install rds /bin/true" >> /etc/modprobe.d/CIS.conf
+echo "install tipc /bin/true" >> /etc/modprobe.d/CIS.conf
+# Disable core dumps incase an application crashes
+echo "* hard core 0" >> /etc/security/limits.conf
+echo 'fs.suid_dumpable = 0' >> /etc/sysctl.conf
+sysctl -p
+echo 'ulimit -S -c 0 > /dev/null 2>&1' >> /etc/profile
+# Disable unnecessary services
+systemctl disable avahi-daemon
+systemctl disable triggerhappy.service
+systemctl disable bluetooth.service
+mv /etc/init/bluetooth.conf /etc/init/bluetooth.conf.disabled
+# Change the pi user password
+echo "Change the user password to meet security requirements"
+passwd pi
+echo -e "\e[1;32mPI Hardened\e[0m"
 #SETUP COMPLETED
-echo -e "\e[1;32mNIB Ready!\e[0m"
-echo -e "\e[1;32mEnd Time: \e[0m `date -u`"
-echo -e "\e[1mYateBTS Config Site:\e[0m \e[4;32mhttp://127.0.0.1/nib\e[0m"
-echo -e "\e[1mIssue 'sudo yate -s' to start-up the network!\e[0m"
+echo -e "\e[1;32mPortable Cell Network Ready!\e[0m"
+echo -e "\e[1;32mStart Time: \e[0m$starttime"
+echo -e "\e[1;32mEnd Time: \e[0m`date -u`"
+duration=$SECONDS
+echo -e "\e[1;32mScript Completed In: \e[0m$(($duration / 60))m $(($duration % 60))s"
+read -n1 -r -p "Get Ready For Reboot...Press Any Key To Continue..."
+reboot now
