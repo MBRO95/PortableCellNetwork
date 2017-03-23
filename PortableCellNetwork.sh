@@ -115,12 +115,24 @@ ln -s /usr/local/share/yate/nib_web nib
 chmod -R a+w /usr/local/etc/yate
 #Update PySim Path for Web GUI
 pypath="/var/www/html/nib/config.php"
-echo "<?php" >> $pypath
-echo '$pysim_path = "/usr/local/bin";' >> $pypath
-echo "?>" >> $pypath
+sed -i '/<?php/ c\<?php\n$pysim_path = "/usr/local/bin";' $pypath
 echo "##### BEGIN PySim #####"
 echo `cat $pypath`
 echo "##### END PySim #####"
+#Create Desktop Startup Script
+cd /home/pi/Desktop
+touch StartYateBTS.sh
+tee StartYateBTS.sh > /dev/null <<EOF
+#!/bin/bash
+#Check for root
+if [ "$EUID" -ne 0 ]
+  then echo -e "\e[1m**MUST BE RUN WITH ROOT PRIVILEDGES**\n**Please Run Again as 'sudo -i ./StartYateBTS.sh'**\e[0m"
+  exit
+fi
+yate -s &
+firefox-esr http://localhost/nib &
+EOF
+chmod +x ./StartYateBTS.sh
 
 #Update YateBTS Config
 echo -e "\e[1;32mUpdating YateBTS Config\e[0m"
