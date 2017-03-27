@@ -231,6 +231,10 @@ echo "Change the user password to meet security requirements"
 passwd pi
 echo -e "\e[1;32mPI Hardened\e[0m"
 
+# Possible additions:
+# Configure data retention and logging
+# Warning Banner
+
 #SETUP COMPLETED
 echo -e "\e[1;32mPortable Cell Network Ready!\e[0m"
 echo -e "\e[1;32mStart Time: \e[0m$starttime"
