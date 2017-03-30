@@ -121,8 +121,6 @@ echo `cat $pypath`
 echo "##### END PySim #####"
 #Create Desktop Startup Script
 echo -e "\e[1;32mCreating Desktop Startup Script\e[0m"
-cd /home/pi/Desktop/
-touch /home/pi/Desktop/StartYateBTS.sh
 tee /home/pi/Desktop/StartYateBTS.sh > /dev/null <<EOF
 #!/bin/bash
 #Check for root
@@ -133,7 +131,7 @@ fi
 yate -s &
 firefox-esr http://localhost/nib &
 EOF
-chmod +x /home/pi/Desktop/StartYateBTS.sh
+chmod +x /home/pi/StartYateBTS.sh
 
 #Update YateBTS Config
 echo -e "\e[1;32mUpdating YateBTS Config\e[0m"
