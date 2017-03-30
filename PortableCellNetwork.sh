@@ -122,8 +122,8 @@ echo "##### END PySim #####"
 #Create Desktop Startup Script
 echo -e "\e[1;32mCreating Desktop Startup Script\e[0m"
 cd /home/pi/Desktop/
-touch StartYateBTS.sh
-tee StartYateBTS.sh > /dev/null <<EOF
+touch /home/pi/Desktop/StartYateBTS.sh
+tee /home/pi/Desktop/StartYateBTS.sh > /dev/null <<EOF
 #!/bin/bash
 #Check for root
 if [ "$EUID" -ne 0 ]
@@ -133,7 +133,7 @@ fi
 yate -s &
 firefox-esr http://localhost/nib &
 EOF
-chmod +x ./StartYateBTS.sh
+chmod +x /home/pi/Desktop/StartYateBTS.sh
 
 #Update YateBTS Config
 echo -e "\e[1;32mUpdating YateBTS Config\e[0m"
@@ -154,7 +154,7 @@ echo `cat $yatebts_config`
 echo "##### VERIFIED YBTS.CONF #####"
 #Update Welcome Message
 cd /usr/local/share/yate/scripts
-sed -i '/var msg_text/ c\var msg_text = "Welcome to '$networkname'. Your number is: "+msisdn+".";' nib.js
+sed -i '/var msg_text/ c\var msg_text = "Welcome to '$networkname'. Your number is: "+msisdn+"." **THIS NETWORK IS FOR AUTHORIZED USE ONLY. ALL ACTIVITY MAY BE MONITORED & REPORTED**;' nib.js
 #Update Yate Subscribers
 yate_subscribers="/usr/local/etc/yate/subscribers.conf"
 sed -i '/country_code=/ c\country_code=1' $yate_subscribers
@@ -175,11 +175,19 @@ EOF
 # Raspberry Pi Hardening Script - Brendan Harlow
 echo -e "\e[1;32mRunning Raspberry Pi Hardening Script\e[0m"
 # Update the operating system
+# Rationale:
+# Periodically patches contain security enhancements, bug fixes, and additional features for functionality. 
 apt-get -y dist-upgrade
-# Report world-writable directories and enable a sticky bit to prevent unauthorized users from modifying files
-echo "Displaying world writable directories"
+
+# Enable sticky bit on all world writable directories
+# Rationale:
+# Prevent unauthorized users from modifying or renaming files that belong to a different owner. 
+echo "Setting sticky bit on world writable directories"
 df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 2>/dev/null | xargs chmod o-t
+
 # Remove unnecessary filesystems
+# Rationale:
+# Removing support for unneeded filesystem types reduces the local attack surface on the Pi. 
 echo "install cramfs /bin/true" >> /etc/modprobe.d/CIS.conf
 echo "install freevxfs /bin/true" >> /etc/modprobe.d/CIS.conf
 echo "install jffs2 /bin/true" >> /etc/modprobe.d/CIS.conf
@@ -187,25 +195,42 @@ echo "install hfs /bin/true" >> /etc/modprobe.d/CIS.conf
 echo "install hfsplus /bin/true" >> /etc/modprobe.d/CIS.conf
 echo "install squashfs /bin/true" >> /etc/modprobe.d/CIS.conf
 echo "install udf /bin/true" >> /etc/modprobe.d/CIS.conf
+
 # Remove unnecessary network protocols
+# Rationale:
+# The linux kernel supports uncommon network protocols that are unneeded for what our goals are for this project.
+# Therefore they should be disabled.
 echo "install dccp /bin/true" >> /etc/modprobe.d/CIS.conf
 echo "install sctp /bin/true" >> /etc/modprobe.d/CIS.conf
 echo "install rds /bin/true" >> /etc/modprobe.d/CIS.conf
 echo "install tipc /bin/true" >> /etc/modprobe.d/CIS.conf
+
 # Disable core dumps incase an application crashes
+# Rationale:
+# A core dump is the memory of an executable program. It is generally used to determine
+# why a program aborted. It can also be used to glean confidential information from a core
+# file.
 echo "* hard core 0" >> /etc/security/limits.conf
 echo 'fs.suid_dumpable = 0' >> /etc/sysctl.conf
 sysctl -p
 echo 'ulimit -S -c 0 > /dev/null 2>&1' >> /etc/profile
+
 # Disable unnecessary services
+# Rationale:
+# It is best practice for security to disable unnecessary services that are not required for operation to prevent exploitation.
 systemctl disable avahi-daemon
 systemctl disable triggerhappy.service
 systemctl disable bluetooth.service
-mv /etc/init/bluetooth.conf /etc/init/bluetooth.conf.disabled
+
 # Change the pi user password
+# Rationale:
+# The default password needs to be changed from raspberry.
+# Strong passwords protect systems from being hacked through brute force methods.
+# Password set cannot be a dictionary word, meet certain length, and contain a mix of characters.
 echo "Change the user password to meet security requirements"
 passwd pi
 echo -e "\e[1;32mPI Hardened\e[0m"
+
 #SETUP COMPLETED
 echo -e "\e[1;32mPortable Cell Network Ready!\e[0m"
 echo -e "\e[1;32mStart Time: \e[0m$starttime"
