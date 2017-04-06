@@ -40,9 +40,8 @@ To deploy your own portable cell network you'll need:
     ```bash
     sudo reboot now
     ```
-10. Run the 'StartYateBTS.sh' script located on the Desktop
+10. Run the 'StartYateBTS.sh' script located in the home directory
     ```bash
-    cd ~/Desktop
     sudo ./StartYateBTS.sh -i #It's important to keep the '-i' flag so the script runs interactively
     ```
 
