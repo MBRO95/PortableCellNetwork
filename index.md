@@ -1,8 +1,8 @@
 ---
 layout: default
 ---
-# Secure Portable Cell Network Documentation
-## Project By: Matthew May & Brendan Harlow for Champlain College SEC-440
+# Project Documentation
+### Project By: Matthew May & Brendan Harlow for Champlain College SEC-440
 
 # Introduction
 
