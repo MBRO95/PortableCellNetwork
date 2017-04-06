@@ -6,7 +6,7 @@ layout: default
 - Plug-in the Ethernet, Power Supply, and Keyboard to the Pi and then plug the power adapter into the wall. When you reach the login screen login with the default credentials
   - Username: pi
   - Password: raspberry
-![Login Screen](Pi%20Startup/1.jpg "Login Screen")
+![Login Screen](https://github.com/MBRO95/PortableCellNetwork/blob/master/Pi%20Startup/1.JPG "Login Screen")
 
 - Run
 
