@@ -147,6 +147,13 @@ sed -i '/;Identity.MCC=/ c\Identity.MCC=001' $yatebts_config
 sed -i '/;Identity.MNC=/ c\Identity.MNC=01' $yatebts_config
 sed -i '/Radio.PowerManager.MinAttenDB=/ c\Radio.PowerManager.MinAttenDB=50\nIdentity.ShortName='$networkname'' $yatebts_config
 sed -i '/Radio.PowerManager.MaxAttenDB=/ c\Radio.PowerManager.MaxAttenDB=50' $yatebts_config
+#GGSN Settings
+sed -i '/;DNS=/ c\DNS=8.8.8.8' $yatebts_config
+sysctl -w net.ipv4.ip_forward=1
+iptables -A FORWARD --in-interface eth0 -j ACCEPT
+iptables -A FORWARD --in-interface sgsntun -j ACCEPT
+iptables --table nat -A POSTROUTING --out-interface eth0 -j MASQUERADE
+iptables-save > /etc/iptables.conf 
 #Tapping Settings
 sed -i '/GSM=no/ c\GSM=yes' $yatebts_config
 sed -i '/GPRS=no/ c\GPRS=yes' $yatebts_config
@@ -156,9 +163,9 @@ echo `cat $yatebts_config`
 echo "##### VERIFIED YBTS.CONF #####"
 #Update Welcome Message
 cd /usr/local/share/yate/scripts
-sed -i '/var msg_text/ c\var msg_text = "Welcome to '$networkname'. Your number is: "+msisdn+"." **THIS NETWORK IS FOR AUTHORIZED USE ONLY**;' nib.js
+sed -i '/var msg_text/ c\var msg_text = "Welcome to '$networkname'. Your number is: "+msisdn+"." **THIS NETWORK IS FOR AUTHORIZED USE ONLY**";' nib.js
 echo "##### BEGIN nib.js #####"
-echo `cat nib.js`
+echo `cat nib.js \| grep msg_text`
 echo "##### END nib.js #####"
 #Update Yate Subscribers
 yate_subscribers="/usr/local/etc/yate/subscribers.conf"

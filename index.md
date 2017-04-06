@@ -10,114 +10,89 @@ There should be whitespace between paragraphs.
 
 There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
 
-# [](#header-1)Header 1
+# Raspberry Pi Setup
+- Plug-in the Ethernet, Power Supply, and Keyboard to the Pi and then plug the power adapter into the wall. When you reach the login screen login with the default credentials
+  - Username: pi
+  - Password: raspberry
+- Run
+```bash
+sudo raspi-config
+```
+## Change Keyboard Layout
+- Scroll down to ‘Localisation Options’ and press ‘Enter’
+- Scroll down to ‘Change Keyboard Layout’ and press ‘Enter’
+- Scroll down to ‘Other’ and press ‘Enter’
+- Scroll down to ‘English (US)’ and press ‘Enter’
+- Scroll to the very top to ‘English (US)’ and press ‘Enter’
+- Hit ‘Enter’ to accept the defaults on the next two screens, since they don't apply.
+- When you get past the last two steps you will be returned back to the main menu.
+## Enable SSH
+- Scroll down to ‘Interfacing Options’ and press ‘Enter’
+- Scroll down to ‘SSH’ and press ‘Enter’
+- Scroll to ‘Yes’ and press ‘Enter.’
+- On the next screen, press ‘Enter’ to go back to the main menu.
+- When you've reached the main menu, scroll to the right and select ‘Finish,’ then press ‘Enter'
+- When back at the terminal, run the command below to enable the configured settings.
+```bash
+sudo reboot now
+```
+# Network Deployment
+To make your life easier, SSH to your Raspberry Pi.
+To check your Pi’s IP Address:
+```bash
+ifconfig eth0
+```
+*Note the IPv4 address displayed
 
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
+On another computer, utilize a terminal application and run: 
+```bash
+ssh pi@[INSERT PI IPV4 ADDRESS HERE]
+```
+- Once prompted for credentials, again, enter:
+  - Username: pi
+  - Password: raspberry
 
-## [](#header-2)Header 2
+### Now we are interacting with the Pi remotely. Let’s start gathering what we need for deployment.
+```bash
+# Download the script from GitHub
+wget https://raw.githubusercontent.com/MBRO95/PortableCellNetwork/master/PortableCellNetwork.sh
 
-> This is a blockquote following a header.
->
-> When something is important enough, you do it even if the odds are not in your favor.
-
-### [](#header-3)Header 3
-
-```js
-// Javascript code with syntax highlighting.
-var fun = function lang(l) {
-  dateformat.i18n = require('./lang/' + l)
-  return true;
-}
+# Make the downloaded script executable 
+chmod +x ./PortableCellNetwork.sh
+```
+### The script will check to make sure you’re running as root, so make sure you don't leave out the ‘sudo’ portion of the commands below.
+- To run the script without logging its output, issue:
+```bash
+sudo ./PortableCellNetwork.sh
+```
+- To run the script while logging its output, issue:
+```bash
+sudo ./PortableCellNetwork.sh | tee install.log
 ```
 
-```ruby
-# Ruby code with syntax highlighting
-GitHubPages::Dependencies.gems.each do |gem, version|
-  s.add_dependency(gem, "= #{version}")
-end
-```
+- The script will query you for a network name
+  - Provide one and confirm it
+  - OR 
+  - press ‘Enter’ to accept the default name of ‘DuaneDunstonRF’
+- Confirm your network name
+- The script will now initiate the installation and configuration process. This will take close to an hour so you can go find something to do in the meantime.
+- When the script is nearing completion it will query for a new user password for the ‘pi’ user.
+  - Enter and re-enter this password to change from the default for added security.
+### When the script completes it will report how much time it took to run and wait for a keypress to reboot.
+- Press any key to reboot the pi.
+  - You will be rebooted into a desktop environment, simply select the ‘Default Configuration’ option at the pop-up that launches at first boot.
+- A startup script titled ‘StartYateBTS.sh’ will await you in ‘/home/pi’ and will start the cell network processes. 
+  - To boot the startup script it is imperative that it is run in interactive mode by passing the ‘-i’ flag after the script name, like below:
+  ```bash
+  sudo ./StartYateBTS.sh -i
+  ```
+### Once started, this script will:
+- Open a terminal window reporting the Yate (cell network) status
+- Open a Firefox browser window that will navigate to YateBTS (web-based cell network configuration)
+  - Here you can view/modify network configuration settings and manage/write SIM cards for devices.
+# Phone Deployment
+NEEDS TO BE COMPLETED
+# Security Overview
+A security model was implemented in our installation script based on the Center for Internet Security (CIS), which is a highly reputable source for best practice information security. The script incorporates a benchmark model designed for Debian 8 operating system. The Debian 8 operating system is the closest relating Linux distribution to the Raspberry Pi image, therefore we decided that this model was the best choice to use for reference. Originally, we did run into a set back with the security functionality of the Raspberry Pi because it does not support custom partitions that can implement security controls, such as full disk encryption and partition modifiers that deny arbitrary executions and protect against attacks that fill up disk space. The goal of the security script was to implement as many controls as we could while keeping the functionality of the Raspberry Pi operating system and the Yate software. 
 
-#### [](#header-4)Header 4
-
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-
-##### [](#header-5)Header 5
-
-1.  This is an ordered list following a header.
-2.  This is an ordered list following a header.
-3.  This is an ordered list following a header.
-
-###### [](#header-6)Header 6
-
-| head1        | head two          | three |
-|:-------------|:------------------|:------|
-| ok           | good swedish fish | nice  |
-| out of stock | good and plenty   | nice  |
-| ok           | good `oreos`      | hmm   |
-| ok           | good `zoute` drop | yumm  |
-
-### There's a horizontal rule below this.
-
-* * *
-
-### Here is an unordered list:
-
-*   Item foo
-*   Item bar
-*   Item baz
-*   Item zip
-
-### And an ordered list:
-
-1.  Item one
-1.  Item two
-1.  Item three
-1.  Item four
-
-### And a nested list:
-
-- level 1 item
-  - level 2 item
-  - level 2 item
-    - level 3 item
-    - level 3 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-
-### Small image
-
-![](https://assets-cdn.github.com/images/icons/emoji/octocat.png)
-
-### Large image
-
-![](https://guides.github.com/activities/hello-world/branching.png)
-
-
-### Definition lists can be used with HTML syntax.
-
-<dl>
-<dt>Name</dt>
-<dd>Godzilla</dd>
-<dt>Born</dt>
-<dd>1952</dd>
-<dt>Birthplace</dt>
-<dd>Japan</dd>
-<dt>Color</dt>
-<dd>Green</dd>
-</dl>
-
-```
-Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this.
-```
-
-```
-The final element.
-```
+The model follows the practice of disabling anything that is unnecessary to the functionality of the system to reduce the potential attack surface. Performing periodically updates and patches to fix security flaws can be a challenge for a system that is designed to be mobile and in areas where there may not even be access to the Internet.
