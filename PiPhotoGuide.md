@@ -4,8 +4,8 @@ layout: default
 # Raspberry Pi Setup Photo Guide
 [**Click here to go back to the main documentation**](index).
 1. Plug-in the Ethernet, Power Supply, and Keyboard to the Pi and then plug the power adapter into the wall. When you reach the login screen login with the default credentials
-  1. Username: pi
-  2. Password: raspberry
+  * Username: pi
+  * Password: raspberry
 2. Run ‘sudo raspi-config’
 ![sudo raspi-config](https://raw.githubusercontent.com/MBRO95/PortableCellNetwork/master/Pi%20Startup/1.JPG "sudo raspi-config")
 ## Change Keyboard Layout
