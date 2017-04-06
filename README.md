@@ -49,4 +49,6 @@ To deploy your own portable cell network you'll need:
 
 ## Pre-built Image
 
-Additionally, you can skip compiling above by [downloading this SD card image file](https://1drv.ms/u/s!AgREYOhKnDOGnPUc4JhPeDZXMcWJjw) and flashing to your SD card.
+Additionally, you can skip compiling above by downloading an SD card image file below and flashing to your SD card:
+[**3.21.2017 Build**](https://1drv.ms/u/s!AgREYOhKnDOGnPUc4JhPeDZXMcWJjw)
+[**3.23.2017 Build**](https://1drv.ms/u/s!AgREYOhKnDOGnPUu_dNfI7X_ntERpA)
