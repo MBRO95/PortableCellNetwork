@@ -163,7 +163,7 @@ echo `cat $yatebts_config`
 echo "##### VERIFIED YBTS.CONF #####"
 #Update Welcome Message
 cd /usr/local/share/yate/scripts
-sed -i '/var msg_text/ c\var msg_text = "Welcome to '$networkname'. Your number is: "+msisdn+"." **THIS NETWORK IS FOR AUTHORIZED USE ONLY**";' nib.js
+sed -i '/var msg_text/ c\var msg_text = "Welcome to '$networkname'. Your number is: "+msisdn+". **THIS NETWORK IS FOR AUTHORIZED USE ONLY**";' nib.js
 echo "##### BEGIN nib.js #####"
 echo `cat nib.js \| grep msg_text`
 echo "##### END nib.js #####"
