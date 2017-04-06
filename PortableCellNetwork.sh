@@ -121,7 +121,8 @@ echo `cat $pypath`
 echo "##### END PySim #####"
 #Create Desktop Startup Script
 echo -e "\e[1;32mCreating Desktop Startup Script\e[0m"
-tee /home/pi/Desktop/StartYateBTS.sh > /dev/null <<EOF
+scriptpath="/home/pi/StartYateBTS.sh"
+tee $scriptpath > /dev/null <<EOF
 #!/bin/bash
 #Check for root
 if [ "$EUID" -ne 0 ]
@@ -131,7 +132,10 @@ fi
 yate -s &
 firefox-esr http://localhost/nib &
 EOF
-chmod +x /home/pi/StartYateBTS.sh
+echo "##### BEGIN StartYateBTS.sh #####"
+echo `cat $scriptpath`
+echo "##### END StartYateBTS.sh #####"
+chmod +x $scriptpath
 
 #Update YateBTS Config
 echo -e "\e[1;32mUpdating YateBTS Config\e[0m"
@@ -141,8 +145,8 @@ sed -i '/Radio.Band=/ c\Radio.Band=900' $yatebts_config
 sed -i '/Radio.C0=/ c\Radio.C0=75' $yatebts_config
 sed -i '/;Identity.MCC=/ c\Identity.MCC=001' $yatebts_config
 sed -i '/;Identity.MNC=/ c\Identity.MNC=01' $yatebts_config
-sed -i '/Radio.PowerManager.MinAttenDB=/ c\Radio.PowerManager.MinAttenDB=75\nIdentity.ShortName='$networkname'' $yatebts_config
-sed -i '/Radio.PowerManager.MaxAttenDB=/ c\Radio.PowerManager.MaxAttenDB=75' $yatebts_config
+sed -i '/Radio.PowerManager.MinAttenDB=/ c\Radio.PowerManager.MinAttenDB=50\nIdentity.ShortName='$networkname'' $yatebts_config
+sed -i '/Radio.PowerManager.MaxAttenDB=/ c\Radio.PowerManager.MaxAttenDB=50' $yatebts_config
 #Tapping Settings
 sed -i '/GSM=no/ c\GSM=yes' $yatebts_config
 sed -i '/GPRS=no/ c\GPRS=yes' $yatebts_config
@@ -152,7 +156,10 @@ echo `cat $yatebts_config`
 echo "##### VERIFIED YBTS.CONF #####"
 #Update Welcome Message
 cd /usr/local/share/yate/scripts
-sed -i '/var msg_text/ c\var msg_text = "Welcome to '$networkname'. Your number is: "+msisdn+"." **THIS NETWORK IS FOR AUTHORIZED USE ONLY. ALL ACTIVITY MAY BE MONITORED & REPORTED**;' nib.js
+sed -i '/var msg_text/ c\var msg_text = "Welcome to '$networkname'. Your number is: "+msisdn+"." **THIS NETWORK IS FOR AUTHORIZED USE ONLY**;' nib.js
+echo "##### BEGIN nib.js #####"
+echo `cat nib.js`
+echo "##### END nib.js #####"
 #Update Yate Subscribers
 yate_subscribers="/usr/local/etc/yate/subscribers.conf"
 sed -i '/country_code=/ c\country_code=1' $yate_subscribers
