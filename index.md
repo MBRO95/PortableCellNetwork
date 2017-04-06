@@ -1,12 +1,28 @@
 ---
 layout: default
 ---
+# Secure Portable Cell Network Documentation
+## Project By: Matthew May & Brendan Harlow for Champlain College SEC-440
 
-Text can be **bold**, _italic_, or ~~strikethrough~~.
+# Introduction
 
-[Link to another page](another-page).
+The goal of this project is to create a private secure portable cell network utilizing basic technologies for mobile phones that can be easily deployable in any situation. In the event of an emergency, commodity cell networks can easily become severely congested and overwhelmed. Having the ability to set up secure and reliable communications for civilians or law enforcement can save lives, facilitate responses, and provide confidence in decision making.
+
+The radio system that we are using for the cell phones to communicate with is the GSM protocol (Global System for Mobiles) more commonly used by cellular provider such as AT&T and T-Mobile. To broadcast the radio system, we are going to be using a Software Defined Radio (SDR) device called the BladeRF (external). This hardware is controlled by the Raspberry PI (small single-board computer) (external) using YateBTS (external) which is software that implements functions and protocols of both the radio access network and the core GSM network to allow cell phones to communicate using voice, text, and data. The Raspberry PI is instrumental to reach our goals of portability due to its size, low power usability, and cost over alternatives.  
+
+# Prerequisites
+
+### To deploy the portable cell network using our instructions you'll need the following:
+- Raspberry Pi (We used a 3rd Generation Model B Pi)
+- MicroSD Card (32GB Recommended)
+- Nuand BladeRF (We used the BladeRF x40, the smaller card offered by Nuand)
+- SSH enabled on the Pi (For ease of use, Terminal works fine too)
+- GSM and SIM card compatible phones
+- SIM cards (sysmoSIM-GR2)
+- Ethernet Cable (If you desire the phone's to have local internet connectivity)
 
 # Raspberry Pi Setup
+##[Click here for a photo-rich version of these instructions](another-page).
 - Plug-in the Ethernet, Power Supply, and Keyboard to the Pi and then plug the power adapter into the wall. When you reach the login screen login with the default credentials
   - Username: pi
   - Password: raspberry
