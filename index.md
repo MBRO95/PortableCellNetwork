@@ -22,7 +22,7 @@ The radio system that we are using for the cell phones to communicate with is th
 - Ethernet Cable (If you desire the phone's to have local internet connectivity)
 
 # Raspberry Pi Setup
-[##Click here for a photo-rich version of these instructions](another-page).
+[##Click here for a photo-rich version of these instructions](PiPhotoGuide).
 - Plug-in the Ethernet, Power Supply, and Keyboard to the Pi and then plug the power adapter into the wall. When you reach the login screen login with the default credentials
   - Username: pi
   - Password: raspberry
