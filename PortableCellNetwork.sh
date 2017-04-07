@@ -139,14 +139,18 @@ chmod +x $scriptpath
 
 #Update YateBTS Config
 echo -e "\e[1;32mUpdating YateBTS Config\e[0m"
-#GSM Settings
 yatebts_config="/usr/local/etc/yate/ybts.conf"
+#GSM Settings
 sed -i '/Radio.Band=/ c\Radio.Band=900' $yatebts_config
 sed -i '/Radio.C0=/ c\Radio.C0=75' $yatebts_config
 sed -i '/;Identity.MCC=/ c\Identity.MCC=001' $yatebts_config
 sed -i '/;Identity.MNC=/ c\Identity.MNC=01' $yatebts_config
 sed -i '/Radio.PowerManager.MinAttenDB=/ c\Radio.PowerManager.MinAttenDB=50\nIdentity.ShortName='$networkname'' $yatebts_config
 sed -i '/Radio.PowerManager.MaxAttenDB=/ c\Radio.PowerManager.MaxAttenDB=50' $yatebts_config
+#GSM Advanced Settings
+sed -i '/;Cipher.Encrypt=/ c\Cipher.Encrypt=yes' $yatebts_config
+sed -i '/;Cipher.RandomNeighbor=/ c\Cipher.RandomNeighbor=0.8' $yatebts_config
+sed -i '/;Cipher.ScrambleFiller=/ c\Cipher.ScrambleFiller=yes' $yatebts_config
 #GGSN Settings
 sed -i '/;DNS=/ c\DNS=8.8.8.8' $yatebts_config
 sysctl -w net.ipv4.ip_forward=1
@@ -165,7 +169,7 @@ echo "##### VERIFIED YBTS.CONF #####"
 cd /usr/local/share/yate/scripts
 sed -i '/var msg_text/ c\var msg_text = "Welcome to '$networkname'. Your number is: "+msisdn+". **THIS NETWORK IS FOR AUTHORIZED USE ONLY**";' nib.js
 echo "##### BEGIN nib.js #####"
-echo `cat nib.js \| grep msg_text`
+echo `cat nib.js | grep msg_text`
 echo "##### END nib.js #####"
 #Update Yate Subscribers
 yate_subscribers="/usr/local/etc/yate/subscribers.conf"
