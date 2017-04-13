@@ -40,7 +40,7 @@ apt-get -y update && apt-get -y upgrade
 
 #INSTALL LOGISTICAL DEPENDENCIES
 echo -e "\e[1;32mINSTALL LOGISTICAL DEPENDENCIES\e[0m"
-apt-get install -y git python-setuptools python-dev swig libccid pcscd pcsc-tools python-pyscard libpcsclite1 unzip firefox-esr xserver-xorg lightdm xfce4 cmake automake matchbox-keyboard unzip
+apt-get install -y git python-setuptools python-dev swig libccid pcscd pcsc-tools python-pyscard libpcsclite1 unzip firefox-esr xserver-xorg lightdm xfce4 cmake automake matchbox-keyboard iptables-persistent
 #Setup PySIM - If PySIM current version worked we would use this method commented. Falling back to old commit for intended operation
 cd /usr/src
 #   git clone git://git.osmocom.org/pysim pysim
@@ -157,7 +157,7 @@ sysctl -w net.ipv4.ip_forward=1
 iptables -A FORWARD --in-interface eth0 -j ACCEPT
 iptables -A FORWARD --in-interface sgsntun -j ACCEPT
 iptables --table nat -A POSTROUTING --out-interface eth0 -j MASQUERADE
-iptables-save > /etc/iptables.conf 
+iptables-save > /etc/iptables/rules.v4
 #Tapping Settings
 sed -i '/GSM=no/ c\GSM=yes' $yatebts_config
 sed -i '/GPRS=no/ c\GPRS=yes' $yatebts_config
