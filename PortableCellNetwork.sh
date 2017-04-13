@@ -40,6 +40,8 @@ apt-get -y update && apt-get -y upgrade
 
 #INSTALL LOGISTICAL DEPENDENCIES
 echo -e "\e[1;32mINSTALL LOGISTICAL DEPENDENCIES\e[0m"
+echo iptables-persistent iptables-persistent/autosave_v4 boolean true | sudo debconf-set-selections ## Thanks To: 
+echo iptables-persistent iptables-persistent/autosave_v4 boolean true | sudo debconf-set-selections ## https://gist.github.com/alonisser/a2c19f5362c2091ac1e7
 apt-get install -y git python-setuptools python-dev swig libccid pcscd pcsc-tools python-pyscard libpcsclite1 unzip firefox-esr xserver-xorg lightdm xfce4 cmake automake matchbox-keyboard iptables-persistent
 #Setup PySIM - If PySIM current version worked we would use this method commented. Falling back to old commit for intended operation
 cd /usr/src
