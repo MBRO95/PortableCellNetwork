@@ -35,5 +35,6 @@ To deploy your own portable cell network you can:
 Additionally, you can skip compiling above by downloading an SD card image file below and flashing to your SD card:
 - [**3.21.2017 Build**](https://1drv.ms/u/s!AgREYOhKnDOGnPUc4JhPeDZXMcWJjw)
 - [**3.23.2017 Build**](https://1drv.ms/u/s!AgREYOhKnDOGnPUu_dNfI7X_ntERpA)
+- [**4.13.2017 Build**](https://1drv.ms/u/s!AgREYOhKnDOGnYxWUsNzRi3RbP8-rw)
 
 For More Details, [View The Documentation Here](https://mbro95.github.io/PortableCellNetwork/).
