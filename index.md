@@ -120,7 +120,21 @@ sudo ./StartYateBTS.sh -i
   - Here you can view/modify network configuration settings and manage/write SIM cards for devices.
 
 # Phone Deployment
-NEEDS TO BE COMPLETED
+To join a compatible phone to the cell network, SIM cards need to be deployed to work with the correct settings. YateBTS uses a utility called PySIM, a python tool for programming SIM cards. In the installation script PySIM is already set up as the correct version that supports the SysmoSIM-GR2 card type. To start, make sure that the compatible SIM card writer is inserted into the Raspberry Pi with the SIM card to program already in it. 
+
+Open the tab called Manage SIMs as shown below and make sure that the Generate random IMSI setting is checked and the Insert subscribers is unchecked. The insert subscribers setting will break the functionality of the cell network and is recommended to avoid unless there is a fix for it. 
+![Image of SIMprogramming1](https://github.com/MBRO95/PortableCellNetwork/blob/master/Pi%20Startup/SIMprogramming.png)
+
+The next step is to check that the correct settings have been set in the Advanced drop down bar. Make sure the Operator name reflects the correct setting that was chosen for the cell network. Otherwise use the default settings and hit save. 
+![Image of SIMprogramming2](https://github.com/MBRO95/PortableCellNetwork/blob/master/Pi%20Startup/SIMprogramming1.png)
+
+The screenshot below shows an example output that the SIM programming was successful. And lastly that the deployed SIM card shows in the Manage SIMs list. 
+![Image of SIMprogramming3](https://github.com/MBRO95/PortableCellNetwork/blob/master/Pi%20Startup/SIMprogramming3.png)
+
+After inserting the SIM card into the GSM phone and powering on, YateBTS will send a welcome message with the assigned number for the phone as shown in the screenshot below. To troubleshoot if the Android phone is not connecting to the cell network properly, open the dialer application and type: 
+*#*#4636#*#*
+A menu will appear and in the phone information tab, select the preferred network type to be GSM only and restart the phone.
+![Image of SIMprogramming4](https://github.com/MBRO95/PortableCellNetwork/blob/master/Pi%20Startup/phone.jpg)
 
 # Security Overview
 A security model was implemented in our installation script based on the Center for Internet Security (CIS), which is a highly reputable source for best practice information security. The script incorporates a benchmark model designed for Debian 8 operating system. The Debian 8 operating system is the closest relating Linux distribution to the Raspberry Pi image, therefore we decided that this model was the best choice to use for reference. Originally, we did run into a set back with the security functionality of the Raspberry Pi because it does not support custom partitions that can implement security controls, such as full disk encryption and partition modifiers that deny arbitrary executions and protect against attacks that fill up disk space. The goal of the security script was to implement as many controls as we could while keeping the functionality of the Raspberry Pi operating system and the Yate software. 
