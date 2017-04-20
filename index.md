@@ -141,15 +141,15 @@ A security model was implemented in our installation script based on the Center 
 
 The model follows the practice of disabling anything that is unnecessary to the functionality of the system to reduce the potential attack surface. Performing periodically updates and patches to fix security flaws can be a challenge for a system that is designed to be mobile and in areas where there may not even be access to the Internet.
 
-Update the operating system.
+### Update the operating system
 
-### Rationale:
+Rationale:
 Periodically patches contain security enhancements, bug fixes, and additional features for functionality. 
 ```bash
 sudo apt-get -y dist-upgrade
 ```
 
-### Enable sticky bit on all world writable directories.
+### Enable sticky bit on all world writable directories
 
 Rationale:
 Prevent unauthorized users from modifying or renaming files that belong to a different owner. 
@@ -158,7 +158,7 @@ echo "Setting sticky bit on world writable directories"
 df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 2>/dev/null | xargs chmod o-t
 ```
 
-### Remove unnecessary filesystems.
+### Remove unnecessary filesystems
 
 Rationale:
 Removing support for unneeded filesystem types reduces the local attack surface on the Pi. 
@@ -172,7 +172,7 @@ echo "install squashfs /bin/true" >> /etc/modprobe.d/CIS.conf
 echo "install udf /bin/true" >> /etc/modprobe.d/CIS.conf
 ```
 
-### Remove unnecessary network protocols.
+### Remove unnecessary network protocols
 
 Rationale:
 The linux kernel supports uncommon network protocols that are unneeded for what our goals are for this project. Therefore they should be disabled.
@@ -183,7 +183,7 @@ echo "install rds /bin/true" >> /etc/modprobe.d/CIS.conf
 echo "install tipc /bin/true" >> /etc/modprobe.d/CIS.conf
 ```
 
-### Disable core dumps incase an application crashes.
+### Disable core dumps incase an application crashes
 
 Rationale:
 A core dump is the memory of an executable program. It is generally used to determine why a program aborted. It can also be used to glean confidential information from a core file.
@@ -194,7 +194,7 @@ sysctl -p
 echo 'ulimit -S -c 0 > /dev/null 2>&1' >> /etc/profile
 ```
 
-### Disable unnecessary services.
+### Disable unnecessary services
 
 Rationale:
 It is best practice for security to disable unnecessary services that are not required for operation to prevent exploitation.
@@ -204,7 +204,7 @@ systemctl disable triggerhappy.service
 systemctl disable bluetooth.service
 ```
 
-### Change the pi user password.
+### Change the pi user password
 
 Rationale:
 The default password needs to be changed from raspberry.
