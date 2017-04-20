@@ -140,3 +140,70 @@ A menu will appear and in the phone information tab, select the preferred networ
 A security model was implemented in our installation script based on the Center for Internet Security (CIS), which is a highly reputable source for best practice information security. The script incorporates a benchmark model designed for Debian 8 operating system. The Debian 8 operating system is the closest relating Linux distribution to the Raspberry Pi image, therefore we decided that this model was the best choice to use for reference. Originally, we did run into a set back with the security functionality of the Raspberry Pi because it does not support custom partitions that can implement security controls, such as full disk encryption and partition modifiers that deny arbitrary executions and protect against attacks that fill up disk space. The goal of the security script was to implement as many controls as we could while keeping the functionality of the Raspberry Pi operating system and the Yate software. 
 
 The model follows the practice of disabling anything that is unnecessary to the functionality of the system to reduce the potential attack surface. Performing periodically updates and patches to fix security flaws can be a challenge for a system that is designed to be mobile and in areas where there may not even be access to the Internet.
+
+Update the operating system
+Rationale:
+Periodically patches contain security enhancements, bug fixes, and additional features for functionality. 
+```bash
+sudo apt-get -y dist-upgrade
+```
+
+Enable sticky bit on all world writable directories
+Rationale:
+Prevent unauthorized users from modifying or renaming files that belong to a different owner. 
+echo "Setting sticky bit on world writable directories"
+```bash
+df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 2>/dev/null | xargs chmod o-t
+```
+
+Remove unnecessary filesystems
+Rationale:
+Removing support for unneeded filesystem types reduces the local attack surface on the Pi. 
+```bash
+echo "install cramfs /bin/true" >> /etc/modprobe.d/CIS.conf
+echo "install freevxfs /bin/true" >> /etc/modprobe.d/CIS.conf
+echo "install jffs2 /bin/true" >> /etc/modprobe.d/CIS.conf
+echo "install hfs /bin/true" >> /etc/modprobe.d/CIS.conf
+echo "install hfsplus /bin/true" >> /etc/modprobe.d/CIS.conf
+echo "install squashfs /bin/true" >> /etc/modprobe.d/CIS.conf
+echo "install udf /bin/true" >> /etc/modprobe.d/CIS.conf
+```
+
+Remove unnecessary network protocols
+Rationale:
+The linux kernel supports uncommon network protocols that are unneeded for what our goals are for this project. Therefore they should be disabled.
+```bash
+echo "install dccp /bin/true" >> /etc/modprobe.d/CIS.conf
+echo "install sctp /bin/true" >> /etc/modprobe.d/CIS.conf
+echo "install rds /bin/true" >> /etc/modprobe.d/CIS.conf
+echo "install tipc /bin/true" >> /etc/modprobe.d/CIS.conf
+```
+
+Disable core dumps incase an application crashes
+Rationale:
+A core dump is the memory of an executable program. It is generally used to determine why a program aborted. It can also be used to glean confidential information from a core file.
+```bash
+echo "* hard core 0" >> /etc/security/limits.conf
+echo 'fs.suid_dumpable = 0' >> /etc/sysctl.conf
+sysctl -p
+echo 'ulimit -S -c 0 > /dev/null 2>&1' >> /etc/profile
+```
+
+Disable unnecessary services
+Rationale:
+It is best practice for security to disable unnecessary services that are not required for operation to prevent exploitation.
+```bash
+systemctl disable avahi-daemon
+systemctl disable triggerhappy.service
+systemctl disable bluetooth.service
+```
+
+Change the pi user password
+Rationale:
+The default password needs to be changed from raspberry.
+Strong passwords protect systems from being hacked through brute force methods.
+Password set cannot be a dictionary word, meet certain length, and contain a mix of characters.
+```bash
+passwd pi
+```
+
