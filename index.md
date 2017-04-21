@@ -213,4 +213,54 @@ Password set cannot be a dictionary word, meet certain length, and contain a mix
 ```bash
 passwd pi
 ```
-
+# General Remarks & Useful Notes
+### Real-world range testing:
+- ~60' between phones through walls
+- ~100' between phones open hallway
+### Useful directories:
+Path to shared files directory
+- /usr/local/share/yate
+Path to conf files directory
+- /usr/local/etc/yate
+Path to user files directory
+- /root/.yate
+Path to modules directory
+- /usr/local/lib/yate
+### Testing
+- The Yate NIB setup includes an ELIZA chat bot that you can communicate with by sending SMS messages to 35492.
+ - This is a good way to test use of a single device.
+- Android Phone Config Menu
+ - Dial *#*#4636#*#*
+# Special Thanks To...
+- http://stackoverflow.com/questions/8903239/how-to-calculate-time-difference-in-bash-script
+- https://www.modmypi.com/blog/raspberry-pi-7-touch-screen-assembly-guide
+- https://www.element14.com/community/docs/DOC-78156/l/raspberry-pi-7-touchscreen-display
+- http://www.orbit-lab.org/wiki/Documentation/gWide/bLTESIM
+- https://wush.net/trac/rangepublic/wiki/ProgrammingSIMcards
+- http://javacard.vetilles.com/2006/09/26/status-words-in-iso7816/
+- https://sourceforge.net/p/openlte/discussion/general/thread/89479a03/?limit=25
+- http://www.smartcardfocus.us/shop/ilp/id~618/acr38t-d1/p/index.shtml
+- https://github.com/osmocom/pysim
+- http://hackaday.com/2016/04/08/build-your-own-gsm-base-station-for-fun-and-profit
+- https://github.com/Nuand/bladeRF/wiki/Setting-up-Yate-and-YateBTS-with-the-bladeRF
+- http://wiki.yatebts.com/index.php/PySIM
+- http://forum.yate.ro/index.php?topic=299.0
+- http://stackoverflow.com/questions/14426491/python-3-importerror-no-module-named-setuptools
+- https://github.com/LudovicRousseau/pyscard/issues/15
+- http://www.linuxquestions.org/questions/linux-newbie-8/install-pyscard-package-on-ubuntu-error-gcc-failed-with-status-1-a-736085/
+- http://stackoverflow.com/questions/21530577/fatal-error-python-h-no-such-file-or-directory
+- https://ludovicrousseau.blogspot.com/2010/04/pcsc-sample-in-python.html
+- http://stackoverflow.com/questions/92802/what-is-the-linux-equivalent-to-dos-pause
+- https://github.com/MBRO95/PortableCellNetwork
+- http://raspberrypi.stackexchange.com/questions/4444/enabling-ssh-on-rpi-without-screen-keystrokes-for-raspi-config
+- http://unix.stackexchange.com/questions/48535/can-grep-return-true-false-or-are-there-alternative-methods
+- http://forum.yate.ro/index.php?topic=497.0
+- https://github.com/Nuand/bladeRF
+- http://mcc-mnc.com/
+- https://github.com/Nuand/bladeRF/wiki/Setting-up-Yate-and-YateBTS-with-the-bladeRF
+- http://forum.yate.ro/index.php?topic=1178.0
+- https://blog.strcpy.info/2016/04/21/building-a-portable-gsm-bts-using-bladerf-raspberry-and-yatebts-the-definitive-guide/
+- https://nuand.com/forums/viewtopic.php?f=9&t=3862
+- http://superuser.com/questions/1150752/installing-software-with-missing-library-libusb1-0
+- http://wiki.yatebts.com/index.php/Network_in_a_Box
+- https://www.att.com/deviceunlock/#/
