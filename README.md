@@ -40,4 +40,4 @@ Additionally, you can skip compiling above by downloading an SD card image file 
 For More Details, [View The Documentation Here](https://mbro95.github.io/PortableCellNetwork/).
 
 ## Deploy the network after script install or image flash
-[View Deployment Video Here](https://onedrive.live.com/embed?cid=86339C4AE8604404&resid=86339C4AE8604404%21477412&authkey=AMhl1xZsgI62eZE)
+[View Deployment Video Here](https://1drv.ms/v/s!AgREYOhKnDOGnZFkVnLnjOaXRx2XQg)
