@@ -218,14 +218,14 @@ passwd pi
 - ~60' between phones through walls
 - ~100' between phones open hallway
 ### Useful directories:
-Path to shared files directory
-- /usr/local/share/yate
-Path to conf files directory
-- /usr/local/etc/yate
-Path to user files directory
-- /root/.yate
-Path to modules directory
-- /usr/local/lib/yate
+- Path to shared files directory
+  - /usr/local/share/yate
+- Path to conf files directory
+  - /usr/local/etc/yate
+- Path to user files directory
+  - /root/.yate
+- Path to modules directory
+  - /usr/local/lib/yate
 ### Testing
 - The Yate NIB setup includes an ELIZA chat bot that you can communicate with by sending SMS messages to 35492.
   - This is a good way to test use of a single device.
