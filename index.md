@@ -131,9 +131,7 @@ The next step is to check that the correct settings have been set in the Advance
 The screenshot below shows an example output that the SIM programming was successful. And lastly that the deployed SIM card shows in the Manage SIMs list. 
 ![Image of SIMprogramming3](https://raw.githubusercontent.com/MBRO95/PortableCellNetwork/master/Pi%20Startup/SIMprogramming3.png)
 
-After inserting the SIM card into the GSM phone and powering on, YateBTS will send a welcome message with the assigned number for the phone as shown in the screenshot below. To troubleshoot if the Android phone is not connecting to the cell network properly, open the dialer application and type: 
-*#*#4636#*#*
-A menu will appear and in the phone information tab, select the preferred network type to be GSM only and restart the phone.
+After inserting the SIM card into the GSM phone and powering on, YateBTS will send a welcome message with the assigned number for the phone as shown in the screenshot below. To troubleshoot if the Android phone is not connecting to the cell network properly, open the dialer application and type ``*#*#4636#*#*``. A menu will appear and in the phone information tab, select the preferred network type to be GSM only and restart the phone.
 ![Image of SIMprogramming4](https://raw.githubusercontent.com/MBRO95/PortableCellNetwork/master/Pi%20Startup/phone.jpg)
 
 # Security Overview
@@ -230,7 +228,7 @@ passwd pi
 - The Yate NIB setup includes an ELIZA chat bot that you can communicate with by sending SMS messages to 35492.
   - This is a good way to test use of a single device.
 - Android Phone Config Menu
-  - Dial *#*#4636#*#*
+  - Dial ``*#*#4636#*#*``
 # Special Thanks To...
 - http://stackoverflow.com/questions/8903239/how-to-calculate-time-difference-in-bash-script
 - https://www.modmypi.com/blog/raspberry-pi-7-touch-screen-assembly-guide
