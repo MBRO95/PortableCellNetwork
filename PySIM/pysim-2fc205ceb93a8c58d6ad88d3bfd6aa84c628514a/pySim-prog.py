@@ -24,6 +24,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+from __future__ import print_function
 import hashlib
 from optparse import OptionParser
 import os
@@ -135,7 +136,7 @@ def parse_options():
 
 	if options.type == 'list':
 		for kls in _cards_classes:
-			print kls.name
+			print(kls.name)
 		sys.exit(0)
 
 	if (options.batch_mode) and (options.num is None):
@@ -366,7 +367,7 @@ def gen_parameters(opts):
 
 def print_parameters(params):
 
-	print """Generated card parameters :
+	print("""Generated card parameters :
  > Name    : %(name)s
  > SMSP    : %(smsp)s
  > ICCID   : %(iccid)s
@@ -375,7 +376,7 @@ def print_parameters(params):
  > Ki      : %(ki)s
  > OPC     : %(opc)s
  > ACC     : %(acc)s
-"""	% params
+"""	% params)
 
 
 def write_parameters(opts, params):
@@ -429,7 +430,7 @@ def init_batch(opts):
 
 	for k in BATCH_INCOMPATIBLE:
 		if getattr(opts, k):
-			print "Incompatible option with batch_state: %s" % (k,)
+			print("Incompatible option with batch_state: %s" % (k,))
 			sys.exit(-1)
 
 	# Don't load state if there is none ...
@@ -437,7 +438,7 @@ def init_batch(opts):
 		return
 
 	if not os.path.isfile(opts.batch_state):
-		print "No state file yet"
+		print("No state file yet")
 		return
 
 	# Get stored data
@@ -470,12 +471,12 @@ def card_detect(opts, scc):
 		for kls in _cards_classes:
 			card = kls.autodetect(scc)
 			if card:
-				print "Autodetected card type %s" % card.name
+				print("Autodetected card type %s" % card.name)
 				card.reset()
 				break
 
 		if card is None:
-			print "Autodetection failed"
+			print("Autodetection failed")
 			return
 
 		if opts.type == "auto_once":
@@ -516,7 +517,7 @@ if __name__ == '__main__':
 
 	while not done:
 		# Connect transport
-		print "Insert card now (or CTRL-C to cancel)"
+		print("Insert card now (or CTRL-C to cancel)")
 		sl.wait_for_card(newcardonly=not first)
 
 		# Not the first anymore !
@@ -533,7 +534,7 @@ if __name__ == '__main__':
 
 		# Erase if requested
 		if opts.erase:
-			print "Formatting ..."
+			print("Formatting ...")
 			card.erase()
 			card.reset()
 
@@ -542,7 +543,7 @@ if __name__ == '__main__':
 		print_parameters(cp)
 
 		# Program the card
-		print "Programming ..."
+		print("Programming ...")
 		card.program(cp)
 
 		# Write parameters permanently
@@ -554,7 +555,7 @@ if __name__ == '__main__':
 		save_batch(opts)
 
 		# Done for this card and maybe for everything ?
-		print "Done !\n"
+		print("Done !\n")
 
 		if not opts.batch_mode:
 			done = True

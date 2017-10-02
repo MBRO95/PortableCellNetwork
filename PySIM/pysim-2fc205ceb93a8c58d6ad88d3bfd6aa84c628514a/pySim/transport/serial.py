@@ -22,6 +22,7 @@
 #
 
 from __future__ import absolute_import
+from __future__ import print_function
 
 import serial
 import time
@@ -151,7 +152,7 @@ class SerialSimLink(LinkBase):
 
 	def _dbg_print(self, s):
 		if self._debug:
-			print s
+			print(s)
 
 	def _tx_byte(self, b):
 		self._sl.write(b)
