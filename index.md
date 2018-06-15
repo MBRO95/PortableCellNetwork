@@ -18,7 +18,11 @@ The radio system that we are using for the cell phones to communicate with is th
 - Nuand BladeRF (We used the BladeRF x40, the smaller card offered by Nuand)
 - SSH enabled on the Pi (For ease of use, Terminal works fine too)
 - GSM and SIM card compatible phones
-- SIM cards (sysmoSIM-GR2)
+- SIM Cards (sysmoSIM-GR2) (!!! VENDOR (AT&T, VERIZON, ETC.) CARDS DO NOT WORK !!!)
+--[Possible Help With This #1](image-3.png)
+--[Possible Help With This #2](image-4.png)
+- Compatible SIM Card Reader (What we used: http://www.smartcardfocus.us/shop/ilp/id~618/acr38t-d1/p/index.shtml)
+-- OR leave REGEX field empty or set to * to allow SIM's to connect to network without assigned numbers/keys
 - Ethernet Cable (If you desire the phone's to have local internet connectivity)
 
 # Raspberry Pi Setup
