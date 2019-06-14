@@ -216,10 +216,8 @@ Password set cannot be a dictionary word, meet certain length, and contain a mix
 passwd pi
 ```
 # General Remarks & Useful Notes
-
 ### PySIM Struggles
-~~~~
-apt-get install python-setuptools python-pyscard python-dev swig libccid pcscd pcsc-tools libpcsclite-dev
+```apt-get install python-setuptools python-pyscard python-dev swig libccid pcscd pcsc-tools libpcsclite-dev
 #Possibly Remove This
 |git clone https://github.com/LudovicRousseau/pyscard.git
 |cd pyscard
@@ -230,9 +228,8 @@ git clone git://git.osmocom.org/pysim pysim
 cd /usr/local/bin
 ln -s /usr/src/pysim/pySim-prog.py pySim-prog.py
 which pySim-prog.py
-add *$pysim_path = "/usr/local/bin";* to /var/www/html/nib/config.php
-~~~~
-
+add $pysim_path = "/usr/local/bin"; to /var/www/html/nib/config.php
+```
 ### Real-world range testing:
 - ~60' between phones through walls
 - ~100' between phones open hallway
