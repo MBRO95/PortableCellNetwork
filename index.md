@@ -273,7 +273,8 @@ passwd pi
 ```
 # General Remarks & Useful Notes
 ### PySIM Struggles
-```apt-get install python-setuptools python-pyscard python-dev swig libccid pcscd pcsc-tools libpcsclite-dev
+```
+apt-get install python-setuptools python-pyscard python-dev swig libccid pcscd pcsc-tools libpcsclite-dev
 #Possibly Remove This
 |git clone https://github.com/LudovicRousseau/pyscard.git
 |cd pyscard
