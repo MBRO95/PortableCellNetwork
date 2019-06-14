@@ -233,6 +233,7 @@ add $pysim_path = "/usr/local/bin"; to /var/www/html/nib/config.php
 ### Real-world range testing:
 - ~60' between phones through walls
 - ~100' between phones open hallway
+
 ### Useful directories:
 - Path to shared files directory
   - /usr/local/share/yate
@@ -242,11 +243,13 @@ add $pysim_path = "/usr/local/bin"; to /var/www/html/nib/config.php
   - /root/.yate
 - Path to modules directory
   - /usr/local/lib/yate
+
 ### Testing
 - The Yate NIB setup includes an ELIZA chat bot that you can communicate with by sending SMS messages to 35492.
   - This is a good way to test use of a single device.
 - Android Phone Config Menu
   - Dial ``*#*#4636#*#*``
+
 # Special Thanks To...
 - http://stackoverflow.com/questions/8903239/how-to-calculate-time-difference-in-bash-script
 - https://www.modmypi.com/blog/raspberry-pi-7-touch-screen-assembly-guide
