@@ -25,6 +25,38 @@ The radio system that we are using for the cell phones to communicate with is th
   - OR leave REGEX field empty or set to '``*``' to allow SIM's to connect to network without assigned numbers/keys
 - Ethernet Cable (If you desire the phone's to have local internet connectivity)
 
+# Nuand bladeRF Setup
+Install a few dependecies we’re gonna need:
+```
+sudo apt-get install git apache2 php5 bladerf libbladerf-dev libbladerf0 automake
+```
+
+At this point, you should already be able to interact with the BladeRF, plug it into one of the USB ports of the RPI, dmesg should be telling you something like:
+```
+[ 2332.071675] usb 1-1.3: New USB device found, idVendor=1d50, idProduct=6066
+[ 2332.071694] usb 1-1.3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[ 2332.071707] usb 1-1.3: Product: bladeRF
+[ 2332.071720] usb 1-1.3: Manufacturer: Nuand
+[ 2332.071732] usb 1-1.3: SerialNumber: b4ef330e19b718f752759b4c14020742
+```
+
+Start the bladeRF-cli utility and issue the version command:
+```
+pi@raspberrypi:~ $ sudo bladeRF-cli -i
+bladeRF> version
+
+  bladeRF-cli version:        0.11.1-git
+  libbladeRF version:         0.16.2-git
+
+  Firmware version:           1.6.1-git-053fb13-buildomatic
+  FPGA version:               0.1.2
+
+bladeRF>
+```
+**IMPORTANT Make sure you have these exact versions of the firmware and the FPGA, other versions might not work in our setup.**
+
+[**Download the correct firmware and FPGA image**](https://www.evilsocket.net/images/bladerf_firmware_and_fpga.tar.gz)
+
 # Raspberry Pi Setup
 [**Click here for a photo-rich version of these instructions**](PiPhotoGuide).
 - Plug-in the Ethernet, Power Supply, and Keyboard to the Pi and then plug the power adapter into the wall. When you reach the login screen login with the default credentials
