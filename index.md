@@ -216,6 +216,23 @@ Password set cannot be a dictionary word, meet certain length, and contain a mix
 passwd pi
 ```
 # General Remarks & Useful Notes
+
+### PySIM Struggles
+~~~~
+apt-get install python-setuptools python-pyscard python-dev swig libccid pcscd pcsc-tools libpcsclite-dev
+#Possibly Remove This
+|git clone https://github.com/LudovicRousseau/pyscard.git
+|cd pyscard
+|sudo python setup.py install
+
+cd /usr/src
+git clone git://git.osmocom.org/pysim pysim
+cd /usr/local/bin
+ln -s /usr/src/pysim/pySim-prog.py pySim-prog.py
+which pySim-prog.py
+add *$pysim_path = "/usr/local/bin";* to /var/www/html/nib/config.php
+~~~~
+
 ### Real-world range testing:
 - ~60' between phones through walls
 - ~100' between phones open hallway
@@ -266,3 +283,11 @@ passwd pi
 - http://superuser.com/questions/1150752/installing-software-with-missing-library-libusb1-0
 - http://wiki.yatebts.com/index.php/Network_in_a_Box
 - https://www.att.com/deviceunlock/#/
+- http://wiki.yatebts.com/index.php/PySIM
+- http://forum.yate.ro/index.php?topic=299.0
+- http://stackoverflow.com/questions/14426491/python-3-importerror-no-module-named-setuptools
+- https://github.com/LudovicRousseau/pyscard/issues/15
+- http://www.linuxquestions.org/questions/linux-newbie-8/install-pyscard-package-on-ubuntu-error-gcc-failed-with-status-1-a-736085/
+- http://stackoverflow.com/questions/21530577/fatal-error-python-h-no-such-file-or-directory
+- https://ludovicrousseau.blogspot.com/2010/04/pcsc-sample-in-python.html
+- https://wush.net/trac/rangepublic/wiki/ProgrammingSIMcards
