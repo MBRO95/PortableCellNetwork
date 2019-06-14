@@ -26,36 +26,60 @@ The radio system that we are using for the cell phones to communicate with is th
 - Ethernet Cable (If you desire the phone's to have local internet connectivity)
 
 # Nuand bladeRF Setup
-Install a few dependecies we’re gonna need:
+You must install the necessary dependencies to the environment.
 ```
-sudo apt-get install git apache2 php5 bladerf libbladerf-dev libbladerf0 automake
+pi@raspberry:~$ sudo su
+root@raspberry:/home/pi# apt-get update
+root@raspberry:/home/pi# apt-get -y install git telnet apache2 php5 libusb-1.0-0 libusb-1.0-0-dbg libusb-1.0-0-dev libgsm1 libgsm1-dev cmake automake
 ```
+### Plugging the Nuand bladeRF x40
+Now you will plug the Nuand bladeRF x40 into one of the USB ports of the Raspberry Pi to ensure that it is being properly detected.
+```
+root@raspberry:/home/pi# dmesg
+[ 2092.437659] usb 1-1.2: New USB device found, idVendor=1d50, idProduct=6066
+[ 2092.437679] usb 1-1.2: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[ 2092.437692] usb 1-1.2: Product: bladeRF
+[ 2092.437704] usb 1-1.2: Manufacturer: Nuand
+[ 2092.437716] usb 1-1.2: SerialNumber: 4c132c8ba43e0c4d922418a29a1ce207
+```
+### Nuand bladeRF Source Code
+Download and install the Nuand bladeRF source code.
+```
+root@raspberry:/home/pi# cd /tmp
+root@raspberry:/tmp# wget -c https://github.com/Nuand/bladeRF/archive/master.zip
+root@raspberry:/tmp# unzip master.zip
+root@raspberry:/tmp# cd bladeRF-master
+root@raspberry:/tmp/bladeRF-master# cd host
+root@raspberry:/tmp/bladeRF-master/host# mkdir build
+root@raspberry:/tmp/bladeRF-master/host# cd build
+root@raspberry:/tmp/bladeRF-master/host/build# cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DINSTALL_UDEV_RULES=ON ../
+root@raspberry:/tmp/bladeRF-master/host/build# make -j4
+root@raspberry:/tmp/bladeRF-master/host/build# make install > install.log
+root@raspberry:/tmp/bladeRF-master/host/build# ldconfig
+```
+### Nuand bladeRF x40 Firmware
+Download and install the Nuand bladeRF x40 firmware v1.9.1.
+```
+root@raspberry:/tmp/SubversiveBTS/yatebts# cd /tmp
+root@raspberry:/tmp/# wget -c http://www.nuand.com/fx3/bladeRF_fw_v1.9.1.img
+root@raspberry:/tmp/# bladeRF-cli -f bladeRF_fw_v1.9.1.img -v verbose
+```
+After install the firmware v1.9.1, unplug the Nuand bladeRF x40 from Raspberry Pi USB port and plug it again to start the device with the new firmware.
 
-At this point, you should already be able to interact with the BladeRF, plug it into one of the USB ports of the RPI, dmesg should be telling you something like:
+Now is time to check installed versions of bladeRF-cli, libbladeRF, Nuand bladeRF x40 firmware and Nuand bladeRF x40 FPGA.
 ```
-[ 2332.071675] usb 1-1.3: New USB device found, idVendor=1d50, idProduct=6066
-[ 2332.071694] usb 1-1.3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
-[ 2332.071707] usb 1-1.3: Product: bladeRF
-[ 2332.071720] usb 1-1.3: Manufacturer: Nuand
-[ 2332.071732] usb 1-1.3: SerialNumber: b4ef330e19b718f752759b4c14020742
-```
-
-Start the bladeRF-cli utility and issue the version command:
-```
-pi@raspberrypi:~ $ sudo bladeRF-cli -i
+root@raspberry:/tmp/# bladeRF-cli -i
 bladeRF> version
 
-  bladeRF-cli version:        0.11.1-git
-  libbladeRF version:         0.16.2-git
+  bladeRF-cli version:        1.3.1-git-unknown
+  libbladeRF version:         1.6.1-git-unknown
 
-  Firmware version:           1.6.1-git-053fb13-buildomatic
-  FPGA version:               0.1.2
+  Firmware version:           1.9.1
+  FPGA version:               Unknown (FPGA not loaded)
 
 bladeRF>
 ```
-**IMPORTANT Make sure you have these exact versions of the firmware and the FPGA, other versions might not work in our setup.**
-
-[**Download the correct firmware and FPGA image**](https://www.evilsocket.net/images/bladerf_firmware_and_fpga.tar.gz)
+Exit from bladeRF prompt typing ‘quit’.
 
 # Raspberry Pi Setup
 [**Click here for a photo-rich version of these instructions**](PiPhotoGuide).
@@ -323,3 +347,11 @@ add $pysim_path = "/usr/local/bin"; to /var/www/html/nib/config.php
 - http://stackoverflow.com/questions/21530577/fatal-error-python-h-no-such-file-or-directory
 - https://ludovicrousseau.blogspot.com/2010/04/pcsc-sample-in-python.html
 - https://wush.net/trac/rangepublic/wiki/ProgrammingSIMcards
+- http://forum.yate.ro/index.php?topic=497.0
+- https://github.com/Nuand/bladeRF
+- http://mcc-mnc.com/
+- https://github.com/Nuand/bladeRF/wiki/Setting-up-Yate-and-YateBTS-with-the-bladeRF
+- http://forum.yate.ro/index.php?topic=1178.0
+- https://blog.strcpy.info/2016/04/21/building-a-portable-gsm-bts-using-bladerf-raspberry-and-yatebts-the-definitive-guide/
+- https://nuand.com/forums/viewtopic.php?f=9&t=3862
+- http://superuser.com/questions/1150752/installing-software-with-missing-library-libusb1-0
